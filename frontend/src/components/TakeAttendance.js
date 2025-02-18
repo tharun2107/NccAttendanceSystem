@@ -16,7 +16,7 @@ const TakeAttendance = () => {
     const token = localStorage.getItem("token");
 
     if (token) {
-      axios.get('http://localhost:5000/api/students', {
+      axios.get('https://nccattendancesystem.onrender.com/api/students', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -103,7 +103,7 @@ const TakeAttendance = () => {
       date,
     }));
 
-    axios.post('http://localhost:5000/api/students/attendance/bulk', attendanceData, {
+    axios.post('https://nccattendancesystem.onrender.com/api/students/attendance/bulk', attendanceData, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       }

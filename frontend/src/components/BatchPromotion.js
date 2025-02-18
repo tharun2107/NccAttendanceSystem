@@ -18,7 +18,7 @@ export default function BatchPromotion() {
       }
 
       const response = await axios.post(
-        "http://localhost:5000/api/students/promote",
+        "https://nccattendancesystem.onrender.com/api/students/promote",
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -44,7 +44,7 @@ export default function BatchPromotion() {
         return;
       }
 
-      const response = await axios.get("http://localhost:5000/api/students/oldbatchstudents", {
+      const response = await axios.get("https://nccattendancesystem.onrender.com/api/students/oldbatchstudents", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
