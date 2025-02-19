@@ -43,7 +43,7 @@ const HomePage = () => {
               />
               <CardContent>
                 {/* <Typography variant="h6">Achievement 1</Typography> */}
-                <Typography variant="body2">NCC Cadet Cops</Typography>
+                <Typography variant="body2">EBSB 2024-25</Typography>
               </CardContent>
             </Card>
           </Grid>

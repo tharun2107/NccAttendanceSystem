@@ -37,7 +37,7 @@ const AddStudent = () => {
 
   return (
     <div className="container mt-4">
-      <h1 className="text-center">Add Student</h1>
+      <h1 className="text-center">Add Cadet</h1>
       
       <form onSubmit={handleSubmit}>
         <div className="form-group mb-3">
@@ -93,7 +93,7 @@ const AddStudent = () => {
             required
           >
             <option value="SD">SD</option>
-            <option value="SI">SI</option>
+            <option value="SW">SW</option>
           </select>
         </div>
 
