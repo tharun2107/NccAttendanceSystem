@@ -9,6 +9,12 @@ router.post("/add", verifyToken, async (req, res) => {
   const { name, regimentalNumber ,category,division} = req.body;
 
   try {
+    if (!name || !regimentalNumber || !category || !division) {
+      return res.status(400).json({ message: "Please fill all fields" });
+    }
+    if (Student.findOne({ regimentalNumber })) {
+      return res.status(400).json({ message: "Student already exists" });
+    }
     const newStudent = new Student({ name, regimentalNumber,category,division });
     await newStudent.save();
     res.status(201).json({ message: "Student added successfully" });
