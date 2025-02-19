@@ -17,23 +17,28 @@ const AddStudent = () => {
       [name]: value,
     }));
   };
+// Handle form submission
+const handleSubmit = (e) => {
+  e.preventDefault();
 
-  // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios.post('https://nccattendancesystem.onrender.com/api/students/add', student, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`, // Sending Bearer token for authentication
-      }
-    })
-    .then(response => {
-      alert('Student added successfully');
-      setStudent({ name: '', regimentalNumber: '', category: 'B1', division: 'SD' }); // Reset form
-    })
-    .catch(error => {
+  axios.post('https://nccattendancesystem.onrender.com/api/students/add', student, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`, // Sending Bearer token for authentication
+    }
+  })
+  .then(response => {
+    alert('Student added successfully');
+    setStudent({ name: '', regimentalNumber: '', category: 'B1', division: 'SD' }); // Reset form
+  })
+  .catch(error => {
+    if (error.response && error.response.status === 400) {
+      alert(error.response.data.message); // Display "Student already exists"
+    } else {
       console.error("There was an error adding the student:", error);
-    });
-  };
+    }
+  });
+};
+
 
   return (
     <div className="container mt-4">
