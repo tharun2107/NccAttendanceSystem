@@ -11,7 +11,7 @@ function LoginPage() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", {
+      const response = await axios.post("https://nccattendancesystem.onrender.com/api/auth/login", {
         username,
         password,
       });

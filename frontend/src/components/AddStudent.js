@@ -21,7 +21,7 @@ const AddStudent = () => {
 const handleSubmit = (e) => {
   e.preventDefault();
 
-  axios.post('http://localhost:5000/api/students/add', student, {
+  axios.post('https://nccattendancesystem.onrender.com/api/students/add', student, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`, // Sending Bearer token for authentication
     }

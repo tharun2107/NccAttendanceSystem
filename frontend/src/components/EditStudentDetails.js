@@ -20,7 +20,7 @@ export default function EditStudentDetails() {
 
   const fetchStudents = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/students", {
+        const res = await axios.get("https://nccattendancesystem.onrender.com/api/students", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -48,7 +48,7 @@ export default function EditStudentDetails() {
   const handleEditSave = async (id) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/students/editstudent/${id}`,
+          `https://nccattendancesystem.onrender.com/api/students/editstudent/${id}`,
         editForm,
         {
           headers: {
@@ -69,7 +69,7 @@ export default function EditStudentDetails() {
       if (window.confirm("Are you really sure? This cannot be undone!")) {
         try {
           await axios.delete(
-            `http://localhost:5000/api/students/deletestudent/${id}`,
+              `https://nccattendancesystem.onrender.com/api/students/deletestudent/${id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,

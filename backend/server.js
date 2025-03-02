@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 // Allow requests only from a specific frontend URL
 const corsOptions = {
-  origin: "http://localhost:3000", // Replace with your frontend URL
+  origin: "https://kitswncc.netlify.app", // Replace with your frontend URL
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true, // Allow cookies if needed
 };
