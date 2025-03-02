@@ -9,7 +9,7 @@ import Batch from "./components/BatchPromotion";
 import Header from "./components/Header";
 import AuthNavBar from "./components/AuthNavbar";
 import GuestNavbar from "./components/GuestNavbar";
-
+import EditStudentDetails from "./components/EditStudentDetails";
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -26,8 +26,9 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/take-attendance" element={<TakeAttendance />} />
-          <Route path="/add-student" element={<AddStudent />} />
+          <Route path="/add-cadet" element={<AddStudent />} />
         <Route path="/view-attendance" element={<AttendanceReport />} />
+        <Route path="/edit-cadet" element={<EditStudentDetails />} />
           <Route path="/batch" element={<Batch />} />
         </Routes>
       </Router>

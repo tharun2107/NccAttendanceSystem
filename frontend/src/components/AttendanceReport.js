@@ -16,7 +16,7 @@ export default function AttendanceReport() {
     const token = localStorage.getItem("token");
 
     if (token) {
-      axios.get('https://nccattendancesystem.onrender.com/api/students', {
+      axios.get('http://localhost:5000/api/students', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

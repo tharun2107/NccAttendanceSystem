@@ -127,5 +127,43 @@ router.get("/oldbatchstudents", verifyToken, async (req, res) => {
 
 });
 
+// edit student details
+router.put("/editstudent/:id", verifyToken, async (req, res) => {
+  try {
+    const updatedStudent = await Student.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: {
+          name: req.body.name,
+          regimentalNumber: req.body.regimentalNumber,
+          category: req.body.category,
+          division: req.body.division,
+        },
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedStudent);
+  } catch (error) {
+    res.status(500).json({ message: "Error updating student", error });
+  }
+});
+
+
+// Delete student
+router.delete("/deletestudent/:id", verifyToken, async (req, res) => {
+  try {
+    const deletedStudent = await Student.findByIdAndDelete(req.params.id);
+
+    if (!deletedStudent) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    res.status(200).json({ message: "Student deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting student", error });
+  }
+});
+
+
 module.exports = router;
 

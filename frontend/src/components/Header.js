@@ -28,7 +28,7 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsAuthenticated(false);
-    navigate("/login");
+    navigate("/");
   };
 
   return (
@@ -54,8 +54,8 @@ const Header = () => {
                   <Button component={Link} to="/take-attendance" sx={{ color: "white" }}>
                     Take Attendance
                   </Button>
-                  <Button component={Link} to="/add-student" sx={{ color: "white" }}>
-                    Add Student
+                  <Button component={Link} to="/add-cadet" sx={{ color: "white" }}>
+                    Add Cadet
                   </Button>
                   <Button component={Link} to="/view-attendance" sx={{ color: "white" }}>
                     View Attendance
@@ -63,14 +63,23 @@ const Header = () => {
                   <Button component={Link} to="/batch" sx={{ color: "white" }}>
                     Batch Promotion
                   </Button>
+                  <Button component={Link} to="/edit-cadet" sx={{ color: "white" }}>
+                  Edit Cadet Details
+                  </Button>
                   <Button onClick={handleLogout} sx={{ color: "white" }}>
                     Logout
                   </Button>
                 </>
               ) : (
+                  <>
                 <Button component={Link} to="/login" sx={{ color: "white" }}>
                   Login
+                    </Button>
+                    <Button component={Link} to="/" sx={{ color: "white" }}>
+                  Home
                 </Button>
+                    </>
+                  
               )}
             </Box>
 
@@ -96,8 +105,8 @@ const Header = () => {
                 <ListItem button component={Link} to="/take-attendance">
                   <Typography>Take Attendance</Typography>
                 </ListItem>
-                <ListItem button component={Link} to="/add-student">
-                  <Typography>Add Student</Typography>
+                <ListItem button component={Link} to="/add-cadet">
+                  <Typography>Add Cadet</Typography>
                 </ListItem>
                 <ListItem button component={Link} to="/view-attendance">
                   <Typography>View Attendance</Typography>
@@ -105,14 +114,22 @@ const Header = () => {
                 <ListItem button component={Link} to="/batch">
                   <Typography>Batch Promotion</Typography>
                 </ListItem>
+                <ListItem button component={Link} to="/edit-cadet">
+                  <Typography>Edit Cadet Details</Typography>
+                </ListItem>
                 <ListItem button onClick={handleLogout}>
                   <Typography>Logout</Typography>
                 </ListItem>
               </>
             ) : (
+                <>
               <ListItem button component={Link} to="/login">
                 <Typography>Login</Typography>
-              </ListItem>
+                  </ListItem>
+                  <ListItem button component={Link} to="/">
+                    <Typography>Home</Typography>
+                  </ListItem>
+                  </>
             )}
           </List>
         </Box>
