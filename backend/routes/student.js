@@ -90,32 +90,41 @@ router.get("/", verifyToken, async (req, res) => {
     res.status(500).json({ message: "Error fetching students", error });
   }
 });
-// Batch promotion (protected route)
+//batch promotion route
 router.post("/promote", verifyToken, async (req, res) => {
+  const { type } = req.body;
+
   try {
-    // Find all students who are active and have not been promoted yet
-    const students = await Student.find({ isActive: true });
-
-    for (const student of students) {
-      if (student.category === "B1") {
-        student.category = "B2"; // Move B1 to B2
-      } else if (student.category === "B2") {
-        student.category = "C"; // Move B2 to C
-      }
-
-      // Inactivate old students (i.e., students moving from C to inactive)
-      if (student.category === "C") {
-        student.isActive = false;
-      }
-
-      await student.save();
+    if (type === "B1toB2") {
+      const result = await Student.updateMany(
+        { category: "B1", isActive: true },
+        { $set: { category: "B2" } }
+      );
+      return res.status(200).json({ message: `Promoted ${result.modifiedCount} students from B1 to B2.` });
     }
 
-    res.status(200).json({ message: "Batch promotion successful" });
+    if (type === "B2toC") {
+      const result = await Student.updateMany(
+        { category: "B2", isActive: true },
+        { $set: { category: "C" } }
+      );
+      return res.status(200).json({ message: `Promoted ${result.modifiedCount} students from B2 to C.` });
+    }
+
+    if (type === "CtoOld") {
+      const result = await Student.updateMany(
+        { category: "C", isActive: true },
+        { $set: { isActive: false } }
+      );
+      return res.status(200).json({ message: `Marked ${result.modifiedCount} C category students as old students.` });
+    }
+
+    return res.status(400).json({ message: "Invalid promotion type." });
   } catch (error) {
-    res.status(500).json({ message: "Error during batch promotion", error });
+    res.status(500).json({ message: "Error during batch promotion.", error });
   }
 });
+
 router.get("/oldbatchstudents", verifyToken, async (req, res) => {
   try {
     const students = await Student.find({ isActive: false });

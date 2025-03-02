@@ -1,13 +1,25 @@
 import { useState } from "react";
 import axios from "axios";
-import { Card, CardContent, Button, Typography, Box, CircularProgress, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Button,
+  Typography,
+  Box,
+  CircularProgress,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+} from "@mui/material";
 
 export default function BatchPromotion() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [oldStudents, setOldStudents] = useState([]);
 
-  const handlePromotion = async () => {
+  const handlePromotion = async (type) => {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
@@ -19,7 +31,7 @@ export default function BatchPromotion() {
 
       const response = await axios.post(
         "https://nccattendancesystem.onrender.com/api/students/promote",
-        {},
+        { type },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -44,12 +56,15 @@ export default function BatchPromotion() {
         return;
       }
 
-      const response = await axios.get("https://nccattendancesystem.onrender.com/api/students/oldbatchstudents", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        "https://nccattendancesystem.onrender.com/api/students/oldbatchstudents",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       setOldStudents(response.data);
-      setMessage(""); // Clear previous messages
+      setMessage("");
     } catch (error) {
       setMessage("Error fetching old batch students.");
       console.error(error);
@@ -66,26 +81,53 @@ export default function BatchPromotion() {
             Batch Promotion
           </Typography>
           <Typography variant="body1" gutterBottom>
-            This will automatically move students from B1 → B2 → C at year-end. Old students will be marked inactive.
+            Promote students to the next category or mark C batch as Old.
           </Typography>
+
           <Button
             variant="contained"
             color="primary"
-            onClick={handlePromotion}
+            onClick={() => handlePromotion("B1toB2")}
+            fullWidth
+            disabled={loading}
+            sx={{ mb: 1 }}
+          >
+            {loading ? <CircularProgress size={24} /> : "Promote B1 → B2"}
+          </Button>
+
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handlePromotion("B2toC")}
+            fullWidth
+            disabled={loading}
+            sx={{ mb: 1 }}
+          >
+            {loading ? <CircularProgress size={24} /> : "Promote B2 → C"}
+          </Button>
+
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => handlePromotion("CtoOld")}
             fullWidth
             disabled={loading}
           >
-            {loading ? <CircularProgress size={24} /> : "Promote Students"}
+            {loading ? <CircularProgress size={24} /> : "Mark C as Old Batch"}
           </Button>
+
           {message && (
-            <Typography variant="body2" color={message.includes("Error") ? "error" : "success"} sx={{ mt: 2 }}>
+            <Typography
+              variant="body2"
+              color={message.includes("Error") ? "error" : "success"}
+              sx={{ mt: 2 }}
+            >
               {message}
             </Typography>
           )}
         </CardContent>
       </Card>
 
-      {/* Button to fetch old students */}
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Typography variant="h6" gutterBottom>
@@ -101,15 +143,22 @@ export default function BatchPromotion() {
             {loading ? <CircularProgress size={24} /> : "Fetch Old Students"}
           </Button>
 
-          {/* Display old students in a table */}
           {oldStudents.length > 0 && (
             <Table sx={{ mt: 2 }}>
               <TableHead>
                 <TableRow>
-                  <TableCell><strong>Name</strong></TableCell>
-                  <TableCell><strong>Regimental Number</strong></TableCell>
-                  <TableCell><strong>Category</strong></TableCell>
-                  <TableCell><strong>Division</strong></TableCell>
+                  <TableCell>
+                    <strong>Name</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>Regimental Number</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>Category</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>Division</strong>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -126,7 +175,11 @@ export default function BatchPromotion() {
           )}
 
           {message && (
-            <Typography variant="body2" color={message.includes("Error") ? "error" : "success"} sx={{ mt: 2 }}>
+            <Typography
+              variant="body2"
+              color={message.includes("Error") ? "error" : "success"}
+              sx={{ mt: 2 }}
+            >
               {message}
             </Typography>
           )}
